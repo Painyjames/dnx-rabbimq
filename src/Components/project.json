@@ -1,0 +1,14 @@
+{
+  "version": "1.0.1",
+  "description": "Components Class Library",
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "dnx451": { }
+  },
+  "dependencies": {
+    "Core": "1.0.0-*"
+  }
+}

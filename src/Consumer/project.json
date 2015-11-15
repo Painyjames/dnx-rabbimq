@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-*",
+  "description": "Consumer Console Application",
+  "authors": [ "fjarb" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "resource": "config.Development.json",
+
+  "dependencies": {
+    "Components": "1.0.1"
+  },
+
+    "commands": {
+        "Consumer": "Consumer"
+    },
+
+    "frameworks": {
+        "dnx451": { }
+    }
+}
