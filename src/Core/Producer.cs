@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Core
 {
-	public class Producer<T> : IProducer<T>
+	public class Producer : IProducer
 	{
 		private readonly IModel _channel;
 		private readonly IUtilities _utilities;
@@ -20,15 +20,21 @@ namespace Core
 			_channel = connection.CreateModel();
 		}
 
-		public void Produce(T message)
+		public void Produce<T>(T message)
+		{
+			Produce(message, message.GetType());
+		}
+
+		public void Produce(object message, Type type)
 		{
 			var payload = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 			var basicProperties = _channel.CreateBasicProperties();
 			basicProperties.ContentType = "application/json";
 			basicProperties.DeliveryMode = 2; //persistent
-			_channel.BasicPublish(_utilities.ExchangeName<T>(),
-							  _utilities.RoutingKey<T>(), basicProperties,
+			_channel.BasicPublish(_utilities.ExchangeName(type),
+							  _utilities.RoutingKey(type), basicProperties,
 							  payload);
 		}
+
 	}
 }

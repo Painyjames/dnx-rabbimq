@@ -10,5 +10,9 @@ namespace Core
 		string ExchangeName<T>();
 		string QueueName<T>();
 		string RoutingKey<T>();
+
+		string ExchangeName(Type type);
+		string QueueName(Type type);
+		string RoutingKey(Type type);
 	}
 }

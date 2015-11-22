@@ -16,7 +16,7 @@ namespace Components.Second
 		public Component2(IBasicConsumer basicConsumer,
 							 Core.IConnectionFactory connectionFactory,
 							 IUtilities utilities,
-							 IProducer<Message3> producer) : base(basicConsumer, connectionFactory, utilities, producer)
+							 IProducer producer) : base(basicConsumer, connectionFactory, utilities, producer)
 		{
 		}
 

@@ -12,18 +12,18 @@ using System.Reflection;
 
 namespace Core
 {
-	public abstract class BaseComponent<TIn, TOut> : IConsumer<TIn>, IProducer<TOut>, IStartable where TIn: BaseMessage where TOut : BaseMessage
+	public abstract class BaseComponent<TIn, TOut> : IConsumer<TIn>, IProducer, IStartable where TIn: BaseMessage
 	{
 		private readonly IBasicConsumer _basicConsumer;
 		private readonly IModel _channel;
 		private readonly IUtilities _utilities;
-		private readonly IProducer<TOut> _producer;
+		private readonly IProducer _producer;
 		private string _consumerTag;
 
 		public BaseComponent(IBasicConsumer basicConsumer,
 							 IConnectionFactory connectionFactory,
 							 IUtilities utilities,
-							 IProducer<TOut> producer) {
+							 IProducer producer) {
 			_basicConsumer = basicConsumer;
 			_utilities = utilities;
             var connection = connectionFactory.CreateConnection();
@@ -59,9 +59,9 @@ namespace Core
 			}
 		}
 
-		public void Produce(TOut message)
+		public void Produce<TOut>(TOut message)
 		{
-			_producer.Produce(message);
+			Produce(message, message.GetType());
         }
 
 		public void Start()
@@ -76,7 +76,23 @@ namespace Core
 		}
 
 		public abstract TOut Process(TIn message);
-		
+
+		public void Produce(object message, Type type)
+		{
+			var compositeMessage = message as IList<BaseMessage>;
+
+			if (compositeMessage != null)
+			{
+				foreach (var msg in compositeMessage)
+				{
+					_producer.Produce(msg);
+				}
+			}
+			else
+			{
+				_producer.Produce(message);
+			}
+		}
 	}
 
 	public static class BaseComponentExtensions

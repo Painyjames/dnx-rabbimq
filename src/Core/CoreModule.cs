@@ -22,7 +22,7 @@ namespace Core
 		private Assembly _assembly;
 		private IConfigurationRoot _config;
 
-		public void Start<T>(IList<string> components = null, string environment = "Development")
+		public IContainer Start<T>(IList<string> components = null, string environment = "Development")
 		{
 			_assembly = Assembly.GetAssembly(typeof(T));
 			_config = Configure(environment);
@@ -31,7 +31,8 @@ namespace Core
 			LoadComponents(components, builder);
 			var container = builder.Build();
 			var options = container.Resolve<IOptions<ConnectionSettings>>();
-		}
+			return container;
+        }
 
 		protected override void Load(ContainerBuilder builder)
 		{
@@ -44,8 +45,8 @@ namespace Core
 			builder.RegisterType<ConnectionFactory>()
 				.AsImplementedInterfaces().SingleInstance();
 
-			builder.RegisterGeneric(typeof(Producer<>))
-				.As(typeof(IProducer<>)).SingleInstance();
+			builder.RegisterType(typeof(Producer))
+				.As(typeof(IProducer)).SingleInstance();
 
 			builder.Register(p => _config)
 			.As<IConfigurationRoot>().SingleInstance();

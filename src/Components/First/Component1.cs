@@ -12,12 +12,14 @@ namespace Components.First
 {
 	public class Component1 : BaseComponent<Message1, Message2>
 	{
+		private readonly Random _random;
 
 		public Component1(IBasicConsumer basicConsumer,
 							 Core.IConnectionFactory connectionFactory,
 							 IUtilities utilities,
-							 IProducer<Message2> producer) : base(basicConsumer, connectionFactory, utilities, producer)
+							 IProducer producer) : base(basicConsumer, connectionFactory, utilities, producer)
 		{
+			_random = new Random();
 		}
 
 		public override Message2 Process(Message1 message)
@@ -25,7 +27,7 @@ namespace Components.First
 			return new Message2
 			{
 				Message = message.Message,
-				Number = new Random().Next()*message.Message.Length*2
+				Number = _random.Next()*message.Message.Length*2
 			};
 		}
 	}

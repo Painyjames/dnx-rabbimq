@@ -22,7 +22,9 @@ namespace Core
 			UserName = connectionSettings.UserName;
 			Password = connectionSettings.Password;
 			VirtualHost = connectionSettings.VirtualHost;
-        }
+			AutomaticRecoveryEnabled = true;
+			NetworkRecoveryInterval = TimeSpan.FromSeconds(10);
+		}
 		
 		public new IConnection CreateConnection()
 		{

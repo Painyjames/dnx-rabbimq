@@ -10,7 +10,8 @@ namespace Consumer
         {
 			try
 			{
-				Console.WriteLine($"Loading Components \n{string.Join("\n", args)}");
+				var modulesToLoad = args.Length == 0? "All" : string.Join("\n", args);
+                Console.WriteLine($"Loading Components \n{modulesToLoad}");
 				new Components.Module().Start<Program>(args);
 				Console.WriteLine($"Components Loaded");
 				Console.ReadLine();

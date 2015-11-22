@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public interface IProducer
+    public abstract class CompositeMessage
     {
-		void Produce<T>(T message);
-		void Produce(object message, Type type);
+		public IList<BaseMessage> Messages { get; set; }
+
     }
 }

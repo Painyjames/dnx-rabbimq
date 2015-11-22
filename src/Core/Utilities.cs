@@ -19,5 +19,18 @@ namespace Core
 		{
 			return $"{QueueName<T>()}.*";
 		}
+
+		public string ExchangeName(Type type)
+		{
+			return type.Namespace;
+		}
+		public string QueueName(Type type)
+		{
+			return $"{ExchangeName(type)}.{type.Name}";
+		}
+		public string RoutingKey(Type type)
+		{
+			return $"{QueueName(type)}.*";
+		}
 	}
 }
