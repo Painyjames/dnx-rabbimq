@@ -23,7 +23,8 @@ namespace Core
 		public BaseComponent(IBasicConsumer basicConsumer,
 							 IConnectionFactory connectionFactory,
 							 IUtilities utilities,
-							 IProducer producer) {
+							 IProducer producer)
+		{
 			_basicConsumer = basicConsumer;
 			_utilities = utilities;
             var connection = connectionFactory.CreateConnection();
