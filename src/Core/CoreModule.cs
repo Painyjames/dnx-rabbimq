@@ -22,11 +22,11 @@ namespace Core
 		private Assembly _assembly;
 		private IConfigurationRoot _config;
 
-		public IContainer Start<T>(IList<string> components = null, string environment = "Development")
+		public IContainer Start<T>(IList<string> components = null, string environment = "Development", ContainerBuilder containerBuilder = null)
 		{
 			_assembly = Assembly.GetAssembly(typeof(T));
 			_config = Configure(environment);
-			var builder = new ContainerBuilder();
+			var builder = containerBuilder ?? new ContainerBuilder();
 			Load(builder);
 			LoadComponents(components, builder);
 			var container = builder.Build();
