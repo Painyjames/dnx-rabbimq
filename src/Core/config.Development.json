@@ -1,0 +1,7 @@
+{
+  "HostName": "cascomio.ddns.net",
+  "UserName": "investup",
+  "Password": "test01!",
+  "VirtualHost": "/",
+  "RequestedHeartbeat": 30
+}
